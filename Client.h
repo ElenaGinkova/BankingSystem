@@ -1,27 +1,28 @@
 #pragma once
 #include "User.h"
 #include "Account.h"
+#include "OpenTask.h"
+#include "CloseTask.h"
+#include "ChangeTask.h"
+#include "Cheque.h"
+#include <iostream>
 
 class Client : public User
 {
+public:
+	Client() = default;
+	Client(const MyString& name, const MyString& id, size_t age, MyString password);
+
+	Task* open();
+	Task* close(Account* acc);
+	Task* change(const MyString& , const MyString& , Account* acc);
+	void printMesseges() const;
+	void redeem(const MyString& verificationCode);//
+	void recieveCheque(const ChequeCode& code);
+	const MyString& getUserId() const;
+	void recieveMessage(const MyString& message);
+	void checkAvailabilty(Account* acc) const;
 private:
 	Vector<MyString> messeges;
-	Vector<Account*> accounts;
-	Vector<ChequeCode> cheque;//*?
-
-public:
-	//and checks
-	Client(MyString name, size_t id, size_t age, MyString password);
-
-	void checkAvailabilty(const char* bankName, size_t accountNum) const;
-	void open(const char* bankName, size_t accountNum);
-	void close(const char* bankName, size_t accountNum);
-	void redeem(const char* bankName, size_t accountNum, const char* verificationCode);
-	void change(const char* newBank, const char* currentBank, size_t accountNum);
-	void list(const char* bankName) const;
-	void printMesseges() const;
-	
+	Vector<ChequeCode> cheques;	
 };
-
-
-//-add big 6 because of using pointers in vector
