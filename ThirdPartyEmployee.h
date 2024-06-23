@@ -1,13 +1,16 @@
 #pragma once
-#include "ChequePool.h"
-#include "User.h"
-class ThirdPartyEmployee : public User
+#include "ThirdPartyEmployeeRunner.h"
+#include "BankSystem.h"
+class ThirdPartyEmployeeRunner
 {
-private:
-	static ChequePool checks;
-
 public:
-	ThirdPartyEmployee(MyString name, size_t id, size_t age, MyString password);
-	//sends msessege to the user
-	void send_check(size_t sum, char* verificationCode, size_t id);
+	ThirdPartyEmployeeRunner(BankSystem& system);
+
+	void runThirdPartyEmployee();
+private:
+	BankSystem& system;
+
+	void help() const;
+	void sendCheque();
 };
+
