@@ -5,7 +5,8 @@
 template <typename T>
 class Vector {
 public:
-	Vector() = default;
+	Vector();
+	Vector(size_t cap);
 	Vector(const Vector<T>& other);
 	Vector(Vector<T>&& other);
 	Vector<T>& operator=(const Vector<T>& other);
@@ -36,6 +37,17 @@ private:
 	void resize();
 };
 
+template<typename T>
+Vector<T>::Vector() : Vector(CAPACITYDEFAULT)
+{
+}
+
+template<typename T>
+Vector<T>::Vector(size_t cap)
+{
+	data = new T[cap];
+}
+
 template <typename T>
 Vector<T>::Vector(const Vector<T>& other) {
 	copyFrom(other);
@@ -51,7 +63,7 @@ Vector<T>& Vector<T>::operator=(const Vector<T>& other) {
 	if (this != &other)
 	{
 		free();
-		copy(other);
+		copyFrom(other);
 	}
 	return *this;
 }
