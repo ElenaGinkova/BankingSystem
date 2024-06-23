@@ -1,29 +1,18 @@
 #pragma once
 #include <iostream>
-#include "MyString.h"
 #include "Vector.hpp"
 #include "Cheque.h"
-
-
-//abstract?
+#include "UserInfo.h"
 class User
 {
-protected:
-
-	MyString name;
-	MyString surname;
-	MyString password;
-	size_t id;
-	size_t age;
-
 public:
-	User(MyString name, size_t id, size_t age, MyString password);
-
-	//addcheque
-	//osrebricheck
+	User() = default;
+	User(const MyString& name, const MyString& id, size_t age, MyString password);
 	void whoAmI() const;
-
+	const MyString& getName()const;
 	bool isValidUser(MyString name, MyString password)const;
-
-	virtual ~User() = default;
+	
+protected:
+	UserInfo data;
 };
+// cheque
