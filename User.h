@@ -1,8 +1,10 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include "Vector.hpp"
 #include "Cheque.h"
 #include "UserInfo.h"
+
 class User
 {
 public:
@@ -15,4 +17,3 @@ public:
 protected:
 	UserInfo data;
 };
-// cheque
