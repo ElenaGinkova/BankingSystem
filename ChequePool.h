@@ -15,7 +15,6 @@ private:
 public:
 	ChequePool();
 
-	bool validateCode(const char*);//
 	const ChequeCode& getAllocatedCode(const char*, double sum);
 
 	ChequePool(const ChequePool&) = delete;
