@@ -1,5 +1,4 @@
 #include "Employee.h"
-
 int Employee::getTasksCount() const
 {
     return tasks.getSize();
@@ -11,14 +10,21 @@ Employee::Employee(const MyString& name, const MyString& id, size_t age, MyStrin
 
 void Employee::addTask(Task* task)
 {
+    task->setId(nextTaskId++);
     tasks.add(task);
 }
 
 void Employee::printTasks() const
 {
+    if (getTasksCount() == 0)
+    {
+        std::cout << "No tasks" << std::endl;
+        return;
+    }
     for (int i = 0; i < getTasksCount(); i++)
     {
         tasks[i].get()->printTask();
+        std::cout << std::endl;
     }
 }
 
@@ -36,12 +42,10 @@ const MyString& Employee::getBankName() const
     return bankName;
 }
 
-void Employee::view(int taskIndx) const
+void Employee::view(int taskId) const
 {
-    if (taskIndx < 0 || taskIndx >= tasks.getSize())
-    {
-        throw std::logic_error("No such task");
-    }
+    int taskIndx = getTaskIndx(taskId);
+    
     tasks[taskIndx].get()->viewInfo();
 }
 
@@ -55,6 +59,7 @@ Task* Employee::validate(size_t taskIndx)
     {
         throw std::logic_error("Index out of bounds");
     }
+    tasks[taskIndx].get()->setName("Change (validated)");
     return tasks[taskIndx].get();
 }
 
@@ -85,6 +90,30 @@ void Employee::approveChange(size_t taskIndx)
         message += " is real user by asking the bank!";
         throw std::logic_error(message.c_str());
     }
+}
+
+size_t Employee::getTaskIndx(int taskID) const
+{
+    for (int i = 0; i < tasks.getSize(); i++)
+    {
+        if (tasks[i].get()->getId() == taskID)
+        {
+            return i;
+        }
+    }
+    throw std::runtime_error("No such task");
+}
+
+void Employee::saveToFile(std::ofstream& ofs)
+{
+    data.saveToFile(ofs);
+    bankName.saveToFile(ofs);
+}
+
+void Employee::readFromFile(std::ifstream& ifs)
+{
+    data.readFromFile(ifs);
+    bankName.readFromFile(ifs);
 }
 
 
