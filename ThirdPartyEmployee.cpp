@@ -1,64 +1,21 @@
-#include "ThirdPartyEmployeeRunner.h"
+#include "ThirdPartyEmployee.h"
 
-ThirdPartyEmployeeRunner::ThirdPartyEmployeeRunner(BankSystem& system):system(system)
+ChequePool ThirdPartyEmployee::checks;
+ThirdPartyEmployee::ThirdPartyEmployee(const MyString& name, const MyString& id, size_t age, MyString password) : User(name, id,age,password)
 {
 }
 
-void ThirdPartyEmployeeRunner::runThirdPartyEmployee()
+const ChequeCode& ThirdPartyEmployee::make_check(size_t sum, const char* code)
 {
-	MyString command;
-	while (true)
-	{
-		std::cin >> command;
-		try
-		{
-			if (command == "exit")
-			{
-				system.logOut();
-				break;
-			}
-			else if (command == "help")
-			{
-				help();
-			}
-			else if (command == "whoami")
-			{
-				system.getLoggedIn()->whoAmI();
-			}
-			else if (command == "send_check")
-			{
-				sendCheque();
-			}
-			else
-			{
-				std::cout << "Invalid command";
-			}
-		}
-		catch (std::exception& e)
-		{
-			std::cout << e.what();
-		}
-	}
+	return checks.getAllocatedCode(code, sum);
 }
 
-void ThirdPartyEmployeeRunner::help() const
+void ThirdPartyEmployee::saveToFile(std::ofstream& ofs)
 {
-	std::cout << "Commands:\n-send_check [sum] [verification_code] [egn]";
+	data.saveToFile(ofs);
 }
 
-void ThirdPartyEmployeeRunner::sendCheque()
+void ThirdPartyEmployee::readFromFile(std::ifstream& ifs)
 {
-	double sum = 0.0;
-	std::cin >> sum;
-	MyString code, id;
-	std::cin >> code >> id;
-
-	ThirdPartyEmployee* employee = static_cast<ThirdPartyEmployee*>(system.getLoggedIn());
-	const ChequeCode& cheque = employee->make_check(sum, code.c_str());
-	Client& client = *system.getClient(id);
-	client.recieveCheque(cheque);
-
-	MyString mess("You have a check assigned to you by ");
-	mess += employee->getName();
-	client.recieveMessage(mess);
+	data.readFromFile(ifs);
 }
