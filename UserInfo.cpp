@@ -3,12 +3,12 @@
  const size_t UserInfo::ID_LEN = 10;
  const size_t UserInfo::MAX_AGE = 130;
 
- bool isDigit(char ch)
+ static bool isDigit(char ch)
  {
 	 return ch >= '0' && ch <= '9';
  }
 
-bool onlyDigits(MyString id)
+ static bool onlyDigits(MyString id)
 {
 	int size = id.getSize();
 	for (int i = 0; i < size; i++)
