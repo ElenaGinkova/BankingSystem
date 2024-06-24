@@ -1,22 +1,29 @@
 #include "UserInfo.h"
-
+#include <fstream>
  const size_t UserInfo::ID_LEN = 10;
  const size_t UserInfo::MAX_AGE = 130;
 
-size_t digitsCount(size_t num)
+ bool isDigit(char ch)
+ {
+	 return ch >= '0' && ch <= '9';
+ }
+
+bool onlyDigits(MyString id)
 {
-	size_t count = 0;
-	while (num)
+	int size = id.getSize();
+	for (int i = 0; i < size; i++)
 	{
-		count++;
-		num /= 10;
+		if (!isDigit(id[i]))
+		{
+			return false;
+		}
 	}
-	return count;
+	return true;
 }
 
 UserInfo::UserInfo(const MyString& name, MyString id, size_t age, const MyString& password)
 {
-	if (id.getSize() != ID_LEN)
+	if (id.getSize() != ID_LEN || !onlyDigits(id))
 	{
 		throw std::logic_error("Invalid id!");
 	}
@@ -32,7 +39,7 @@ UserInfo::UserInfo(const MyString& name, MyString id, size_t age, const MyString
 
 void UserInfo::printInfo() const
 {
-	std::cout << "Name: " << name << "\nEGN: " << id << "\nAge: " << age;
+	std::cout << "Name: " << name << "\nEGN: " << id << "\nAge: " << age << std::endl;
 }
 
 const MyString& UserInfo::getName() const
@@ -48,4 +55,20 @@ const MyString& UserInfo::getPassword() const
 const MyString& UserInfo::getUserId() const
 {
 	return id;
+}
+
+void UserInfo::saveToFile(std::ofstream& ofs)
+{
+	name.saveToFile(ofs);
+	id.saveToFile(ofs);
+	ofs.write((const char*)&age, sizeof(age));
+	password.saveToFile(ofs);
+}
+
+void UserInfo::readFromFile(std::ifstream& ifs)
+{
+	name.readFromFile(ifs);
+	id.readFromFile(ifs);
+	ifs.read((char*)&age, sizeof(age));
+	password.readFromFile(ifs);
 }
