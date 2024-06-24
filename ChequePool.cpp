@@ -22,7 +22,7 @@ bool ChequePool::chequeExists(const char* cheque) const
 {
 	for (int i = 0; i < size; i++)
 	{
-		if (usedCodes[i].getData() == cheque)
+		if (!std::strcmp(usedCodes[i].getData(), cheque))
 		{
 			return true;
 		}
