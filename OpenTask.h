@@ -8,6 +8,6 @@ public:
 	OpenTask(UserInfo data, TaskType type);
 	Task* clone() const override;
 	void viewInfo() const override;
-	
+	void saveToFile(std::ofstream& ofs);
 private:
 };
