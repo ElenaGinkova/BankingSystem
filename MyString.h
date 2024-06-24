@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 //from Angeld55 github
 
 class MyString
@@ -7,6 +8,7 @@ class MyString
 public:
     MyString();
     MyString(const char* data);
+    MyString(int num);
 
     MyString(const MyString& other);
     MyString(MyString&& other) noexcept;
@@ -29,7 +31,13 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const MyString& obj);
     friend std::istream& operator>>(std::istream& is, MyString& ref);
     friend MyString operator+(const MyString& lhs, const MyString& rhs);
+
+    void saveToFile(std::ofstream& ofs);
+    void readFromFile(std::ifstream& ifs);
 private:
+    char* numToStr(int num);
+    char digitToChar(int digit);
+    size_t numLen(int num);
     explicit MyString(size_t stringLength);
     void resize(unsigned newAllocatedDataSize);
 
