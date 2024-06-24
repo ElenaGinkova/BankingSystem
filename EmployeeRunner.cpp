@@ -13,6 +13,23 @@ static MyString taskTypeToStr(TaskType t)
 	}
 }
 
+void EmployeeRunner::approveChangeMessage(size_t taskIndx, Client* client, TaskStatus status, ChangeTask* task, int accId, Account& acc)
+{
+	MyString mess;
+	if (status == TaskStatus::Valid)
+	{
+		mess = "You changed your savings account to " + task->getNewBank() + ".New account id is " + MyString(accId);
+		changeBanks(task->getOldBank(), task->getNewBank(), accId, acc);
+	}
+	else if (status == TaskStatus::Rejected)
+	{
+		mess = employee->getName() + " rejected your change request to bank " + task->getNewBank() + " for account with id: " + MyString(accId);
+	}
+
+	employee->popTaskAtIndx(taskIndx);
+	client->recieveMessage(mess);
+}
+
 void EmployeeRunner::getCustomMessage(MyString& message)
 {
 	std::cout << "Enter reason in format\"reason\": ";
@@ -135,22 +152,11 @@ void EmployeeRunner::approveChange(size_t taskIndx)
 	TaskStatus status = task->getStatus();
 
 	Client* client = system.getClient(task->getUserId());
-	MyString mess;
+	
 	Account& acc = task->getAccount();
 	int accId = acc.getAccId();
 
-	if (status == TaskStatus::Valid)
-	{
-		mess = "You changed your savings account to " + task->getNewBank() + ".New account id is " + MyString(accId);
-		changeBanks(task->getOldBank(), task->getNewBank(), accId, acc);
-	}
-	else if(status == TaskStatus::Rejected)
-	{
-		mess = employee->getName() + " rejected your change request to bank " + task->getNewBank() + " for account with id: " + MyString(accId);
-	}
-
-	employee->popTaskAtIndx(taskIndx);
-	client->recieveMessage(mess);
+	approveChangeMessage(taskIndx, client, status, task, accId, acc);
 }
 
 void EmployeeRunner::approveOpen(size_t taskNum)
