@@ -30,6 +30,10 @@ MyString::MyString(const char* data)
     std::strcpy(_data, data);
 }
 
+MyString::MyString(int num) : MyString(numToStr(num))
+{
+}
+
 
 MyString::MyString(size_t stringLength)
 {
@@ -202,4 +206,54 @@ bool operator>(const MyString& lhs, const MyString& rhs)
 bool operator>=(const MyString& lhs, const MyString& rhs)
 {
     return std::strcmp(lhs.c_str(), rhs.c_str()) >= 0;
+}
+
+
+size_t MyString::numLen(int num)
+{
+    size_t res = 0;
+    if (num == 0)
+    {
+        res++;
+    }
+    while (num)
+    {
+        res++;
+        num /= 10;
+    }
+    return res;
+}
+
+char MyString::digitToChar(int digit)
+{
+    return digit + '0';
+}
+
+void MyString::saveToFile(std::ofstream& ofs)
+{
+    ofs.write((const char*)&_allocatedDataSize, sizeof(size_t));
+    ofs.write((const char*)&_size, sizeof(size_t));
+    ofs.write((const char*)_data, (_size + 1));
+    ofs.flush();
+}
+
+void MyString::readFromFile(std::ifstream& ifs)
+{
+    ifs.read((char*)&_allocatedDataSize, sizeof(_allocatedDataSize));
+    ifs.read((char*)&_size, sizeof(_size));
+    _data = new char[_allocatedDataSize] {};
+    ifs.read((char*)_data, sizeof(char) * (_size + 1));
+}
+
+char* MyString::numToStr(int num)
+{
+    int len = numLen(num);
+    char* res = new char[len + 1] {};
+    for (int i = len - 1; i >= 0; i--)
+    {
+        res[i] = digitToChar(num % 10);
+        num /= 10;
+    }
+    res[len] = '\0';
+    return res;
 }
