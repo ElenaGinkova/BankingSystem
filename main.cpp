@@ -13,15 +13,15 @@ void runBankSystem(BankSystem& bankSystem)
     {
     case UserType::EmployeeType:  employeeRunner.runEmployee(); break;
     case UserType::ClientType: clientRunner.runClient(); break;
-    case UserType::ThridPartyEmployeeType: thirdPartyEmployeeRunner; break;
+    case UserType::ThridPartyEmployeeType: thirdPartyEmployeeRunner.runThirdPartyEmployee(); break;
     }
 
 }
 
-void run(BankSystem& bankSystem)
+void excecute(BankSystem& bankSystem)
 {
     MyString command;
-    while (command != "exit")
+    while (true)
     {
         std::cin >> command;
         if (command == "login")
@@ -37,6 +37,11 @@ void run(BankSystem& bankSystem)
         {
             bankSystem.createBank();
         }
+        else if (command == "exit")
+        {
+            bankSystem.saveToFile();
+            break;
+        }
         else
         {
             std::cout << "No such command!";
@@ -47,5 +52,6 @@ void run(BankSystem& bankSystem)
 int main()
 {
    BankSystem bankSystem;
-   run(bankSystem);
+   bankSystem.readFromFile();
+   excecute(bankSystem);
 }
