@@ -1,6 +1,6 @@
 #include "ChangeTask.h"
 
-ChangeTask::ChangeTask(const MyString& newBank, const MyString& oldBank, Account* acc, UserInfo data, TaskType type) : Task(data, type), oldBank(oldBank), newBank(newBank), acc(acc)
+ChangeTask::ChangeTask(const MyString& newBank, const MyString& oldBank, Account& acc, UserInfo data, TaskType type) : Task(data, type), oldBank(oldBank), newBank(newBank), acc(acc)
 {
 	this->taskName = "Change - ";
 	message += data.getName();
@@ -12,10 +12,10 @@ void ChangeTask::viewInfo() const
 {
 	std::cout << taskName << " request from:\n";
 	data.printInfo();
-	acc->printInfo();
+	acc.printInfo();
 }
 
-Account* ChangeTask::getAccount() const
+Account& ChangeTask::getAccount() const
 {
 	return acc;
 }
@@ -43,7 +43,7 @@ TaskStatus ChangeTask::getStatus() const
 
 void ChangeTask::change()
 {
-	acc->changeBank(newBank);
+	acc.changeBank(newBank);
 }
 
 Task* ChangeTask::clone() const
