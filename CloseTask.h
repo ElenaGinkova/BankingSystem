@@ -4,11 +4,12 @@
 class CloseTask : public Task
 {
 public:
-	CloseTask(UserInfo data, Account* acc, TaskType type);
+	CloseTask(UserInfo data, Account& acc, TaskType type);
 	void viewInfo() const override;
-	Account* getAccount()const;
+	Account& getAccount()const;
 	Task* clone() const override;
+	void saveToFile(std::ofstream& ofs);
 private:
-	Account* acc;
+	Account& acc;
 };
 
