@@ -3,15 +3,21 @@
 Task::Task(UserInfo data, TaskType type) :type(type), data(data)
 {
 }
-
-void Task::setIndx(int indx)
+void Task::setId(int id)
 {
-	this->indx = indx;
+	this->id = id;
 }
 
-int Task::getIndx() const
+
+void Task::setName(const MyString& name)
 {
-	return indx;
+	taskName = name;
+}
+
+
+int Task::getId() const
+{
+	return id;
 }
 
 TaskType Task::getType() const
@@ -33,6 +39,6 @@ const MyString& Task::getUserId() const
 
 void Task::printTask() const
 {
-	std::cout <<'['<< indx << "] " << taskName << " " << message;
+	std::cout << '[' << id << "] - " << taskName << " " << message;
 }
 
