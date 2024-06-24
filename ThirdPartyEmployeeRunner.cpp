@@ -54,11 +54,10 @@ void ThirdPartyEmployeeRunner::sendCheque()
 	std::cin >> code >> id;
 
 	ThirdPartyEmployee* employee = static_cast<ThirdPartyEmployee*>(system.getLoggedIn());
-	const ChequeCode& cheque = employee->make_check(sum, code.c_str());
 	Client& client = *system.getClient(id);
+	const ChequeCode& cheque = employee->make_check(sum, code.c_str());
 	client.recieveCheque(cheque);
 
-	MyString mess("You have a check assigned to you by ");
-	mess += employee->getName();
+	MyString mess = "You have a check with code " + code + " assigned to you by " + employee->getName();
 	client.recieveMessage(mess);
 }
