@@ -8,15 +8,16 @@ public:
 	void runClient();
 private:
 	BankSystem& system;
+	Client* client = nullptr;
 
 	void fromConsole(MyString&, int&);
-	void checkAvailability();//public or private?
-	void open(Client* client);
-	void close(Client* client);
-
-	void change(Client* client);
-	void list(Client* client)const;
-	void messeges(Client* client)const;
+	void checkAvailability();
+	void open();
+	void close();
+	void redeem();
+	void change();
+	void list()const;
+	void messeges()const;
 	void help() const;
 };
 
