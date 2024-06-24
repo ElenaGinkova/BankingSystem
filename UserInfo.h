@@ -9,13 +9,16 @@ public:
 	const MyString& getName()const;
 	const MyString& getPassword()const;
 	const MyString& getUserId()const;
+
+	void saveToFile(std::ofstream& ofs);
+	void readFromFile(std::ifstream& ifs);
 private:
 	static const size_t ID_LEN;
 	static const size_t MAX_AGE;
 
 	MyString name;
-	MyString password;
 	MyString id;
 	size_t age = 0;
+	MyString password;
 };
 
