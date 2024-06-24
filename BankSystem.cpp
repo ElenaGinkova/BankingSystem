@@ -242,7 +242,10 @@ void BankSystem::saveToFile()
 {
 	MyString fileName("BankSystem.dat");
 	std::ofstream ofs(fileName.c_str(), std::ios::binary);
-
+	if (!ofs.is_open())
+	{
+		return;
+	}
 	size_t size = banks.getSize();
 	ofs.write((const char*)(&size), sizeof(size));
 	for (int i = 0; i < banks.getSize(); i++)
@@ -270,6 +273,10 @@ void BankSystem::readFromFile()
 {
 	MyString fileName("BankSystem.dat");
 	std::ifstream ifs(fileName.c_str(), std::ios::binary);
+	if (!ifs.is_open())
+	{
+		return;
+	}
 	size_t size = 0;
 	ifs.read((char*)&size, sizeof(size));
 	
