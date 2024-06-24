@@ -17,3 +17,12 @@ void OpenTask::viewInfo() const
 	std::cout << taskName << " request from:\n";
 	data.printInfo();
 }
+
+void OpenTask::saveToFile(std::ofstream& ofs)
+{
+	ofs.write((const char*)(&type), sizeof(TaskType));
+	data.saveToFile(ofs);
+	ofs.write((const char*)(&id), sizeof(id));
+	taskName.saveToFile(ofs);
+	message.saveToFile(ofs);
+}
