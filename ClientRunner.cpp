@@ -7,7 +7,7 @@ ClientRunner::ClientRunner(BankSystem& system):system(system)
 void ClientRunner::runClient()
 {
 	MyString command;
-	Client* client = static_cast<Client*>(system.getLoggedIn());
+	client = static_cast<Client*>(system.getLoggedIn());
 	while (true)
 	{
 		std::cin >> command;
@@ -27,27 +27,27 @@ void ClientRunner::runClient()
 			else if (command == "open")//task is dynamic obj but 
 									   //polymorphic container in employee takse care
 			{
-				open(client);
+				open();
 			}
 			else if (command == "close")
 			{
-				close(client);
+				close();
 			}
 			else if (command == "redeem")
 			{
-				//
+				redeem();
 			}
 			else if (command == "change")
 			{
-				change(client);
+				change();
 			}
 			else if (command == "list")
 			{
-				list(client);
+				list();
 			}
 			else if (command == "messages")
 			{
-				messeges(client);
+				messeges();
 			}
 			else if (command == "exit")
 			{
@@ -85,7 +85,7 @@ void ClientRunner::checkAvailability()
 	bank->checkAvailability(accId);
 }
 
-void ClientRunner::open(Client* client)
+void ClientRunner::open()
 {
 	MyString bankName;
 	std::cin >> bankName;
@@ -94,18 +94,30 @@ void ClientRunner::open(Client* client)
 	bank->giveTask(task);
 }
 
-void ClientRunner::close(Client* client)
+void ClientRunner::close()
 {
 	MyString bankName;
 	int accId = -1;
 	fromConsole(bankName, accId);
 	Bank* bank = system.findBank(bankName);
-	Account* acc = bank->getAccount(accId);
+	Account& acc = bank->getAccount(accId);
 	Task* task = client->close(acc);
 	bank->giveTask(task);
 }
 
-void ClientRunner::change(Client* client)
+void ClientRunner::redeem()
+{
+	MyString bankName, code;
+	int accId;
+	std::cin >> bankName >> accId >> code;
+
+	const ChequeCode& cheque = client->getCheque(code);
+	Account& acc = system.findBank(bankName)->getAccount(accId);
+	acc.addMoney(cheque.getSum());
+	client->redeemCheque(code);
+}
+
+void ClientRunner::change()
 {
 	MyString newBankName;
 	std::cout << "NewBankName: ";
@@ -114,13 +126,13 @@ void ClientRunner::change(Client* client)
 	int accId = -1;
 	fromConsole(currBankName, accId);
 	Bank* currBank = system.findBank(currBankName);
-	Account* acc = currBank->getAccount(accId);
+	Account& acc = currBank->getAccount(accId);
 	Task* task = client->change(newBankName, currBankName, acc);
 	Bank* newBank = system.findBank(newBankName);
 	newBank->giveTask(task);
 }
 
-void ClientRunner::list(Client* client) const
+void ClientRunner::list() const
 {
 	MyString bankName;
 	std::cin >> bankName;
@@ -128,7 +140,7 @@ void ClientRunner::list(Client* client) const
 	bank->list(client->getUserId());
 }
 
-void ClientRunner::messeges(Client* client) const
+void ClientRunner::messeges() const
 {
 	client->printMesseges();
 }
