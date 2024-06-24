@@ -22,7 +22,7 @@ private:
 	void sendCustomMessage(MyString mess, Client& client, size_t taskNum);
 	void changeBanks(const MyString&, const MyString&, size_t accIndx, Account& acc);
 
-
+	void approveChangeMessage(size_t taskIndx, Client* client, TaskStatus status, ChangeTask* task, int accId, Account& acc);
 	void getCustomMessage(MyString& message);
 	static const size_t MAX_BUFF_SIZE;
 	int taskIndex();
