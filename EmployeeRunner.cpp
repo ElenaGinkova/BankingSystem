@@ -199,7 +199,8 @@ EmployeeRunner::EmployeeRunner(BankSystem& system):system(system)
 {
 }
 
-void EmployeeRunner::runEmployee()
+
+void EmployeeRunner::run()
 {
 	MyString command;
 	employee = static_cast<Employee*>(system.getLoggedIn());
