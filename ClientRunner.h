@@ -1,11 +1,12 @@
 #pragma once
+#include "Runner.h"
 #include "BankSystem.h"
-class ClientRunner
+class ClientRunner : public Runner
 {
 public:
 	ClientRunner(BankSystem& system);
 
-	void runClient();
+	void run() override;
 private:
 	BankSystem& system;
 	Client* client = nullptr;
