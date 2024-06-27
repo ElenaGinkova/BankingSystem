@@ -13,7 +13,7 @@ public:
 	void whoAmI() const;
 	const MyString& getName()const;
 	bool isValidUser(MyString name, MyString password)const;
-	
+	virtual ~User() = default;
 protected:
 	UserInfo data;
 };
