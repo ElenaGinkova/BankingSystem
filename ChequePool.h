@@ -2,6 +2,16 @@
 #include "Cheque.h"
 class ChequePool
 {
+
+public:
+	ChequePool();
+
+	const ChequeCode& getAllocatedCode(const char*, double sum);
+
+	ChequePool(const ChequePool&) = delete;
+	ChequePool& operator=(const ChequePool&) = delete;
+
+	~ChequePool();
 private:
 	ChequeCode* usedCodes = nullptr;
 	size_t size = 0;
@@ -12,14 +22,5 @@ private:
 
 	bool chequeExists(const char*)const;
 	const ChequeCode& allocate(const char*, double sum);
-public:
-	ChequePool();
-
-	const ChequeCode& getAllocatedCode(const char*, double sum);
-
-	ChequePool(const ChequePool&) = delete;
-	ChequePool& operator=(const ChequePool&) = delete;
-
-	~ChequePool();
 };
 
