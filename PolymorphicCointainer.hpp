@@ -5,8 +5,7 @@
 template<class T>
 class polymorphic_container
 {
-private:
-	Vector<polymorphic_ptr<T>> data;
+
 public:
 	void add(T*);
 	void remove(size_t indx);
@@ -15,6 +14,8 @@ public:
 	size_t getSize() const;
 
 	void execute(size_t idx, void (*func)(T*));
+private:
+	Vector<polymorphic_ptr<T>> data;
 };
 
 template<class T>
