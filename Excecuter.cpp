@@ -39,8 +39,8 @@ void Excecuter::excecuteSystem(BankSystem& bankSystem)
 
     switch (bankSystem.getUserType())
     {
-    case UserType::EmployeeType:  employeeRunner.runEmployee(); break;
-    case UserType::ClientType: clientRunner.runClient(); break;
-    case UserType::ThridPartyEmployeeType: thirdPartyEmployeeRunner.runThirdPartyEmployee(); break;
+    case UserType::EmployeeType:  employeeRunner.run(); break;
+    case UserType::ClientType: clientRunner.run(); break;
+    case UserType::ThridPartyEmployeeType: thirdPartyEmployeeRunner.run(); break;
     }
 }
