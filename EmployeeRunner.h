@@ -1,14 +1,11 @@
 #pragma once
+#include "Runner.h"
 #include "BankSystem.h"
-class EmployeeRunner
+class EmployeeRunner : public Runner
 {
 public:
 	EmployeeRunner(BankSystem& system);
-	void runEmployee();
-	void approve();
-	void disapprove();
-	void validateChange();
-	void help() const;
+	void run();
 
 private:
 	BankSystem& system;
@@ -26,4 +23,10 @@ private:
 	void getCustomMessage(MyString& message);
 	static const size_t MAX_BUFF_SIZE;
 	int taskIndex();
+
+
+	void approve();
+	void disapprove();
+	void validateChange();
+	void help() const;
 };
