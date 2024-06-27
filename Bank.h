@@ -7,12 +7,6 @@
 //generates tasks for employees when client asks
 class Bank
 {
-private:
-	MyString name;
-	Vector<Account> accounts;
-	Vector<Employee> employees;
-	
-	size_t findEmployeeIndxForTask() const;
 public:
 	Bank() = default;
 	Bank(const MyString& name);
@@ -34,4 +28,10 @@ public:
 	
 	void saveToFile(std::ofstream& ofs);
 	void readFromFile(std::ifstream& ifs);
+private:
+	MyString name;
+	Vector<Account> accounts;
+	Vector<Employee> employees;
+	
+	size_t findEmployeeIndxForTask() const;
 };
