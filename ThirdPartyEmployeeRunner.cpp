@@ -4,7 +4,8 @@ ThirdPartyEmployeeRunner::ThirdPartyEmployeeRunner(BankSystem& system):system(sy
 {
 }
 
-void ThirdPartyEmployeeRunner::runThirdPartyEmployee()
+
+void ThirdPartyEmployeeRunner::run()
 {
 	MyString command;
 	while (true)
