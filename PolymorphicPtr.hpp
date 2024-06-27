@@ -6,12 +6,6 @@
 template<class T>
 class polymorphic_ptr
 {
-private:
-	T* ptr = nullptr;
-
-	void free();
-	void copyFrom(const polymorphic_ptr&);
-	void move(polymorphic_ptr&&);
 
 public:
 	polymorphic_ptr() = default;
@@ -39,6 +33,13 @@ public:
 	polymorphic_ptr& operator=(polymorphic_ptr&&) noexcept;
 
 	~polymorphic_ptr();
+private:
+	T* ptr = nullptr;
+
+	void free();
+	void copyFrom(const polymorphic_ptr&);
+	void move(polymorphic_ptr&&);
+
 };
 
 template<class T>
