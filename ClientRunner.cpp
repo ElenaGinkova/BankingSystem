@@ -4,7 +4,8 @@ ClientRunner::ClientRunner(BankSystem& system):system(system)
 {
 }
 
-void ClientRunner::runClient()
+
+void ClientRunner::run()
 {
 	MyString command;
 	client = static_cast<Client*>(system.getLoggedIn());
@@ -25,7 +26,7 @@ void ClientRunner::runClient()
 				checkAvailability();
 			}
 			else if (command == "open")//task is dynamic obj but 
-									   //polymorphic container in employee takse care
+									   //polymorphic container in employee takes care
 			{
 				open();
 			}
