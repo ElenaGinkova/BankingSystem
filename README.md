@@ -1,4 +1,4 @@
-A course project Banking System.
+Object Oriented project course project Banking System.
 
 It is dedicated to simulate banking operations and relations.
 
